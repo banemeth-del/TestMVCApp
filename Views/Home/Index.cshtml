@@ -7,8 +7,39 @@
 </div>
 
 <div>
-    <p>@Html.ActionLink("Test Restrict Edit with revisions only", "DemoRestrictEdit", new { restrictType = "RevisionsOnly" })</p>
-    <p>@Html.ActionLink("Test Restrict Edit with no restrictions", "DemoRestrictEdit", new { restrictType = "NoProtection" })</p>
-
+    <button onclick="convertToPDF()">Convert document to PDF</button>
+    @*<p>@Html.ActionLink("Test Restrict Edit with revisions only", "DemoRestrictEdit", new { restrictType = "RevisionsOnly" })</p>*@
+    @*<p>@Html.ActionLink("Test Restrict Edit with no restrictions", "DemoRestrictEdit", new { restrictType = "NoProtection" })</p>*@
     @*<p>@Html.ActionLink("Test Too Big File", "DemoTooBigFile", "Home")</p>*@
 </div>
+
+<script>
+    function convertToPDF() {
+        let url = new URL(baseuri + '/Home/DownloadPDF');
+        fileDownloadNewTab(url);
+    }
+
+    /**Download a file in new tab*/
+    function fileDownloadNewTab(exportURL) {
+        //Download a file//////////////////////////////////
+        //debugger;
+        //We needed new solution cause of chrome update Version 83.0.4103.61
+        //https://stackoverflow.com/questions/3916191/download-data-url-file
+        //Hide user interface while process the file
+        //create 
+        var link = document.createElement("a");
+        //link.download = "Teszt.xlsx";
+        link.href = exportURL;
+        //we need new tab cause of chrome warnings "Resource interpreted as Document but transferred with MIME type.."
+        //https://stackoverflow.com/questions/6587393/resource-interpreted-as-document-but-transferred-with-mime-type-application-zip
+        link.target = '_blank';
+        document.body.appendChild(link);
+        //click on lick automatically
+        link.click();
+        //clear link from document
+        document.body.removeChild(link);
+        link.remove();
+        //end of download hide spinner, active user interface
+
+    }
+</script>

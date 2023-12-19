@@ -8,6 +8,10 @@ using System.Web.Mvc;
 using Syncfusion.DocIO.DLS;
 using WebGrease.Activities;
 using TestMVCApp.Models;
+using System.Net.Mime;
+using Syncfusion.Pdf;
+using Syncfusion.DocToPDFConverter;
+using System.Xml.Linq;
 
 namespace TestMVCApp.Controllers
 {
@@ -92,6 +96,32 @@ namespace TestMVCApp.Controllers
                 return Json(ret);
             }
         }
+
+        public ActionResult DownloadPDF()
+        {
+            byte[] fileBytes;
+
+            //
+            WordDocument document = new WordDocument("C:\\Temp\\tesztProd.docx");
+
+            //Creates an instance of the DocToPDFConverter
+            DocToPDFConverter converter = new DocToPDFConverter();
+
+            //Converts Word document into PDF document
+            PdfDocument pdfDocument = converter.ConvertToPDF(document);
+
+            using (MemoryStream streamToDoc = new MemoryStream())
+            {
+                pdfDocument.Save(streamToDoc);
+                pdfDocument.Close();
+                fileBytes = streamToDoc.ToArray();
+            }
+            //
+           
+            var response = new FileContentResult(fileBytes, "application/pdf") { FileDownloadName = "test.pdf" };
+            return response;
+        }
+
 
     }
 }
