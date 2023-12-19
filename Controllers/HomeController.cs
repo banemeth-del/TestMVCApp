@@ -106,9 +106,9 @@ namespace TestMVCApp.Controllers
 
             //Creates an instance of the DocToPDFConverter
             DocToPDFConverter converter = new DocToPDFConverter();
-
+            
             //Converts Word document into PDF document
-            PdfDocument pdfDocument = converter.ConvertToPDF(document);
+            PdfDocument pdfDocument = converter.ConvertToPDF(document);//error occurs here
 
             using (MemoryStream streamToDoc = new MemoryStream())
             {
