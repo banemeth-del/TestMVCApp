@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "Document Editor Demo";
+}
+
+<div class="row">
+    <h2>Document Editor Demo</h2>
+</div>
+
+<div>
+    <p>@Html.ActionLink("Test Restrict Edit with revisions only", "DemoRestrictEdit", new { restrictType = "RevisionsOnly" })</p>
+    <p>@Html.ActionLink("Test Restrict Edit with no restrictions", "DemoRestrictEdit", new { restrictType = "NoProtection" })</p>
+
+    @*<p>@Html.ActionLink("Test Too Big File", "DemoTooBigFile", "Home")</p>*@
+</div>

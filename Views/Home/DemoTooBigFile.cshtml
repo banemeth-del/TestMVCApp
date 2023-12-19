@@ -1,0 +1,90 @@
+﻿@model TestMVCApp.Models.PageModel
+@{
+    ViewBag.Title = "Test Too Big File";
+}
+
+<div class="row">
+    <h2>Test Too Big File</h2>
+</div>
+
+
+@{
+    //construct serviceurl (in localhost we need to add "MCL" to that
+    var serviceURL = "/Home/";
+
+    var userDisplayName = "TestUser";
+    var docEditorContainer = new Syncfusion.EJ2.DocumentEditor.DocumentEditorContainerBuilder()
+        .Created("onDocumentEditorContainerCreated")
+        .ServiceUrl(serviceURL)//We need to explicitly set the url where the tool can found the "RestrictEditing" API
+        .DocumentChange("onDocumentLoaded")
+        //.EnableTrackChanges(true)
+        .EnableComment(true)
+        .ShowPropertiesPane(true)
+        .EnableToolbar(true)
+        .CurrentUser(userDisplayName)
+        .ToolbarItems(new string[] {
+            /*"New", "Open",*/ "Undo", "Redo" ,"Comments", "Image", "Table" /*, "Hyperlink" ,"Bookmark", "TableOfContents"*/, "Header",  "Footer",
+            /*"PageSetup", "PageNumber",*/"Break","Find","LocalClipboard", "RestrictEditing" })
+        .Width("100%")
+        .Height("100%")
+        ;
+    docEditorContainer.ID = "DocumentEditor";
+}
+@docEditorContainer.Render()
+
+<style>
+
+    #DocumentEditor_editor_viewerContainer {
+        height: 1000px !important;
+    }
+
+
+    /*limit the height of "too high" toolbar elements..*/
+    .e-control.e-toolbar.e-lib.e-keyboard {
+        height: 30px !important
+    }
+
+    .e-de-track-accept-button.e-control.e-btn.e-lib.e-outline.e-success.e-de-overlay {
+        height: 30px !important
+    }
+
+    .e-de-track-reject-button.e-control.e-btn.e-lib.e-outline.e-danger.e-de-overlay {
+        height: 30px !important
+    }
+</style>
+
+<script type="text/javascript">
+
+    //contract docx data
+    var data = @Html.Raw(Model.sfdtContent);
+
+   //handle event when document editor container created
+   function onDocumentEditorContainerCreated() {
+       //open the document stored in data
+       var container = document.getElementById("DocumentEditor").ej2_instances[0];
+       documenteditor = container.documentEditor;
+       documenteditor.open(data);
+       //debugger;
+       //enforce protection on document
+       //documenteditor.editor.enforceProtection(restricteditpass, 'RevisionsOnly');
+
+       //stop the document protection
+       //container.documentEditor.editor.stopProtection(restricteditpass);
+
+       //Enable read only mode.
+       //container.restrictEditing = true;
+
+       //Enable comment only mode
+       //documenteditor.editor.enforceProtection(restricteditpass, 'CommentsOnly');
+
+   };
+
+    //handle event when document load completes
+    function onDocumentLoaded(args) {
+        //debugger;
+    }
+
+</script>
+
+@Html.EJS().ScriptManager()
+
