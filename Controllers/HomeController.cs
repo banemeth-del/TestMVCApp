@@ -26,7 +26,8 @@ namespace TestMVCApp.Controllers
         {
             //Convert to stream for later use
             Stream stream = new MemoryStream();
-            WordDocument doc = new WordDocument("C:\\Temp\\testRestrictEdit.docx");
+            var pathToFile = Server.MapPath("~/testRestrictEdit.docx");
+            WordDocument doc = new WordDocument(pathToFile);
             doc.Save(stream, Syncfusion.DocIO.FormatType.Docx);
 
             stream.Position = 0;
@@ -52,7 +53,8 @@ namespace TestMVCApp.Controllers
 
             //save the memory stream to disk
             WordDocument doc = new WordDocument(memStream);
-            doc.Save("C:\\Temp\\testRestrictEdit.docx");
+            var pathToFile = Server.MapPath("~/testRestrictEdit.docx");
+            doc.Save(pathToFile);
 
             //Return with one property set to true
             return Json(new { success = true });
@@ -62,15 +64,9 @@ namespace TestMVCApp.Controllers
         {
             //Convert to stream for later use
             Stream stream = new MemoryStream();
-            WordDocument doc = new WordDocument("C:\\Temp\\test.docx");
+            var pathToFile = Server.MapPath("~/tesztProd.docx");
+            WordDocument doc = new WordDocument(pathToFile);
             doc.Save(stream, Syncfusion.DocIO.FormatType.Docx);
-
-            //doc.Save("C:\\Temp\\test2.docx");
-            //doc.Dispose();
-
-
-            //doc.Open("C:\\Temp\\test2.docx");
-            //doc.Save(stream, Syncfusion.DocIO.FormatType.Docx);
 
             stream.Position = 0;
 
@@ -102,7 +98,8 @@ namespace TestMVCApp.Controllers
             byte[] fileBytes;
 
             //
-            WordDocument document = new WordDocument("C:\\Temp\\tesztProd.docx");
+            var pathToFile = Server.MapPath("~/tesztProd.docx");
+            WordDocument document = new WordDocument(pathToFile);
 
             //Creates an instance of the DocToPDFConverter
             DocToPDFConverter converter = new DocToPDFConverter();
