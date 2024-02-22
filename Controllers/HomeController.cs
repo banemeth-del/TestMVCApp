@@ -26,7 +26,7 @@ namespace TestMVCApp.Controllers
         {
             //Convert to stream for later use
             Stream stream = new MemoryStream();
-            var pathToFile = Server.MapPath("~/testRestrictEdit.docx");
+            var pathToFile = Server.MapPath("~/testRestrictEdit.docx"); 
             WordDocument doc = new WordDocument(pathToFile);
             doc.Save(stream, Syncfusion.DocIO.FormatType.Docx);
 
