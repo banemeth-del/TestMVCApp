@@ -71,7 +71,15 @@
        debugger;
 
        if ('@Model.RestrictType' == 'NoProtection') {
-           documenteditor.editor.stopProtection("password");
+           //documenteditor.editor.stopProtection("password");
+
+           documenteditor.editor.stopProtectionAsync("password").then(() => {
+               setTimeout(() => {
+                   debugger; //code is never reaching this point
+                   container.enableTrackChanges = true;
+               }, "1000");
+           });
+
        }
        else {
            documenteditor.editor.enforceProtection("password", '@Model.RestrictType');
@@ -104,7 +112,12 @@
         //stop the protection of the document before save
         var currentProtection = documenteditor.editor.documentHelper.protectionType;
         if (currentProtection != "NoProtection") {
-            documenteditor.editor.stopProtection("password");
+            documenteditor.editor.stopProtectionAsync("password").then(() => {
+                setTimeout(() => {
+                    debugger; //code is never reaching this point
+                    container.enableTrackChanges = true;
+                }, "1000");
+            });
         }
         //
 
